@@ -1,6 +1,3 @@
 # Online-Doodle
 COMP 467 Multimedia Project.
-
-
-Online Doodle was created as a COMP 467 Multimedia course project. 
-
+Simple web-page application that allows you to upload an image to a canvas on your browser!
