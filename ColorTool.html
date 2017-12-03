@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="ColorTool.js"></script>
+    <script src="PaintTool.js"></script>
+    <script>
+      var openFile = function(event) {
+        var canvas = document.getElementById("can");
+        var ctx = canvas.getContext('2d');
+        var reader = new FileReader();
+        reader.onload = function(event){
+            var img = new Image();
+            img.onload = function(){
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img,0,0);
+            }
+            img.src = event.target.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);    
+    };
+</script>
+  </head>
+  <body onmousemove="trackMouse()">
+    <div style="max-width:500px;background-color:rgb(128,128,128)" id="color-tool">
+       <button id="new_file" onclick="document.getElementById('can').height=500; document.getElementById('can').width=500; " >New</button>
+       <input type='file' accept='image/*' onchange='openFile(event)'><br>
+       <img id='output'>
+      <p >Red
+      <input id="red_RGB" type="range" min="0" max="255" value="128" oninput="setColor()">
+      <span id="red_GUI">128</span></p>
+      <p>Green
+      <input id="green_RGB" type="range" min="0" max="255" value="128" oninput="setColor()"/>
+      <span id="green_GUI">128</span></p>
+      <p>Blue
+      <input id="blue_RGB" type="range" min="0" max="255" value="128" oninput="setColor()" />
+      <span id="blue_GUI">128</span></p>
+      <p>Width
+      <input id="size_Brush" type="range" min="0" max="255" value="1" oninput="setBrushWidth()" />
+      <span id="size_GUI">1</span></p>
+      <button id="brush_Tool" onclick="setBrushTool()" >Brush</button>
+      <button id="erase_Tool" onclick="setEraseTool()">Erase</button>
+      <button id="resize_Tool" onclick="setResizeTool()">Resize</button><br />
+      <button id="stroke_Tool" onclick="setStrokeTool()">Stroke</button>
+      <button id="fill_Tool" onclick="setFillTool()">Fill</button>
+    </div>
+    <canvas height=0 width=0 style="border:1px solid black" id="can" onmousedown="Tool()" onmouseup="Untool()" <!----onmouseleave="Untool()"----> >
+    </canvas>
+  </body>
+</html>
