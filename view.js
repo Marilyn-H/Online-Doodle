@@ -52,6 +52,20 @@ function DisplayCurrentTool() {
         button.className = "halfButton";
       }
 
+      settings = document.getElementById("widthSettings");
+      if ( currentTool == "paint" || currentTool == "erase" || currentTool == "rectStroke" ) {
+        settings.style.display="block";
+      } else {
+        settings.style.display="none";
+      }
+
+      settings = document.getElementById("colorSettings");
+      if ( currentTool == "paint" || currentTool == "erase" || currentTool == "rectStroke" || currentTool == "rectFill" ) {
+        settings.style.display="block";
+      } else {
+        settings.style.display="none";
+      }
+
       document.getElementById("brushSizeValue").innerHTML = brushWidth;
       document.getElementById("redValue").innerHTML = currentColorRed;
       document.getElementById("greenValue").innerHTML = currentColorGreen;
