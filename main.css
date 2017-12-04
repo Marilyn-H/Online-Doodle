@@ -1,0 +1,104 @@
+html, body {
+  font-family: sans-serif;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+#header {
+  background-color: black;
+  width: 100%;
+  padding: 25px;
+}
+#logo {
+  height: 50px;
+}
+
+
+#fileBar {
+  background-color: lightblue;
+  margin: 0;
+  padding: 0;
+  
+}
+  #fileBar button, #fileBar label {
+    display: inline-block;
+    text-align: center;
+    color: black;
+    font-size: 12px;
+    background-color: lightblue;
+    border: none;
+    margin: 0;
+    padding: 0 5px;
+    width: 50px !important;
+    height: 100%;
+  }
+  #fileBar button:hover, #fileBar label:hover {
+    color: white;
+  }
+  #openInput {
+    display:none;
+  }
+
+#mainArea{
+  height:100%;
+  width: 100%;
+}
+
+#toolBar{
+  background-color: lightblue;
+  height:100%;
+  float: left;
+  padding-top: 50px;
+  text-align: center;
+  width: 150px;
+}
+  #toolBar button {
+    display: inline-block;
+    background-color: lightblue;
+    width: 100%;
+  }
+    #toolBar .active {
+      background-color: white;
+    }
+  #toolBar p {
+    font-size: 12px;
+    margin:5px 0 0 0;
+  }
+  #toolBar .halfButton {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    font-size: 12px;
+    width: 48%;
+  }
+  #toolBar #colorPreview {
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+  }
+
+#drawingArea {
+  height: 100%;
+  background-color: lightgray;
+}
+#mainCanvas {
+  position: absolute;
+  height: 500px;
+  width: 500px;
+  /*top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);*/
+  background-color: white;
+  border: 1px solid black;
+}
+
+#guiCanvas {
+  pointer-events:none;
+  position: absolute;
+  background-color: rgba(255,255,255,0);
+  height: 500px;
+  width: 500px;
+  opacity: .25;
+  z-index: 100;
+}

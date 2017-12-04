@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+      <meta charset="utf-8">
+      <script type="text/javascript" src="controller.js" ></script>
+      <script type="text/javascript" src="view.js" ></script>
+      <link rel="stylesheet" type="text/css" href="main.css">      
+
+
+  </head>
+
+  <body>
+    <div id="header">
+      <img id="logo" src="logo.png" />
+    </div>
+    <div id="fileBar">
+      <button id="newButton">New</button>
+      <label for="openInput">Open</label>
+      <input id="openInput" type='file' accept='image/*' onchange='openFile()'>
+      <button id="saveButton">Save</button>
+    </div>
+
+    <div id="mainArea" >
+
+      <div id="toolBar">
+
+        <button id="paintButton" >PAINT</button> <br>
+        <button id="eraseButton" >ERASE</button>
+        <p>Width: <span id="brushSizeValue">1</span> </p>
+        <input class="inputSlider" id="brushSize" type="range" min="0" max="255" value="1" oninput="setBrushWidth()" /> <br>
+        <button id="resizeButton" >RESIZE</button> <br>
+        <button id="rectangleButton" >RECTANGLE</button> <br>
+        <div id="rectangleSettings">
+          <button id="rectangleStrokeButton" class="halfButton">STROKE</button>
+          <button id="rectangleFillButton" class="halfButton">FILL</button>
+        </div>
+        <div id="colorSettings">
+            <p>Red: <span id="redValue">0</span> </p>
+            <input id="redSlider" type="range" min="0" max="255" value="1" oninput="setBrushWidth()" /> <br>
+            <p>Green: <span id="greenValue">0</span> </p>
+            <input id="greenSlider" type="range" min="0" max="255" value="1" oninput="setBrushWidth()" /> <br>
+            <p>Blue: <span id="blueValue">0</span> </p>
+            <input id="blueSlider" type="range" min="0" max="255" value="1" oninput="setBrushWidth()" /> <br>
+            <div id="colorPreview"></div>
+        </div>
+
+      </div>
+
+      <div id="drawingArea">
+        <canvas id="mainCanvas" height=500 width=500></canvas>
+        <canvas id="guiCanvas" height=500 width=500></canvas>
+      </div>
+
+  </div>
+
+  </body>
+
+
+</html>
