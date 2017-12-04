@@ -55,17 +55,27 @@ html, body {
   width: 170px;
 }
   #toolBar button {
-    border: 0;
+    border: 0 solid white;
+    margin: 0;
+    padding: 0;
     display: inline-block;
     background-color: lightblue;
     width: 100%;
   }
+    #toolBar button:hover:not(.active) {
+      border-left: 5px solid white;
+      transition: border .5s;
+    }
     #toolBar .active {
       background-color: white;
     }
   #toolBar p {
     font-size: 12px;
-    margin:5px 0 0 0;
+    margin:0 0;
+  }
+  #toolBar .input {
+    margin: 0;
+    width: 90%;
   }
   #toolBar .halfButton {
     padding: 0;
@@ -74,10 +84,17 @@ html, body {
     font-size: 12px;
     width: 48%;
   }
+  #toolBar div:not(#colorPreview) {
+    border-top: 1px solid white;
+    padding: 5px 0;
+    margin: 5px 0 0 0;
+  }
   #toolBar #colorPreview {
+    border: 1px solid black;
     display: inline-block;
     height: 50px;
     width: 50px;
+    transition: background-color .5s;
   }
 
 #drawingArea {

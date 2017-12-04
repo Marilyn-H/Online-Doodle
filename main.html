@@ -3,8 +3,9 @@
 <html>
   <head>
       <meta charset="utf-8">
-      <script type="text/javascript" src="controller.js" ></script>
+      <script type="text/javascript" src="model.js" ></script>
       <script type="text/javascript" src="view.js" ></script>
+      <script type="text/javascript" src="controller.js" ></script>
       <link rel="stylesheet" type="text/css" href="main.css">      
 
 
@@ -27,6 +28,7 @@
 
         <button id="paintButton" >PAINT</button> <br>
         <button id="eraseButton" >ERASE</button> <br>
+        <button id="colorButton" >COLOR PICK</button> <br>
         <button id="resizeButton" >RESIZE</button> <br>
         <button id="cropButton" >CROP</button> <br>
         <button id="rectangleButton" >RECTANGLE</button> <br>
@@ -36,15 +38,15 @@
         </div>
         <div id="widthSettings">
           <p>Width: <span id="brushSizeValue">1</span> </p>
-          <input class="inputSlider" id="brushSize" type="range" min="0" max="255" value="1" oninput="setBrushWidth()" /> <br>
+          <input class="input" id="brushSize" type="text" value="1" oninput="setBrushWidth()" /> <br>
         </div>
         <div id="colorSettings">
             <p>Red: <span id="redValue">0</span> </p>
-            <input id="redSlider" type="range" min="0" max="255" value="1" oninput="setBrushWidth()" /> <br>
+            <input id="redSlider" class="input" type="range" min="0" max="255" value="0" oninput="setBrushWidth()" /> <br>
             <p>Green: <span id="greenValue">0</span> </p>
-            <input id="greenSlider" type="range" min="0" max="255" value="1" oninput="setBrushWidth()" /> <br>
+            <input id="greenSlider" class="input" type="range" min="0" max="255" value="0" oninput="setBrushWidth()" /> <br>
             <p>Blue: <span id="blueValue">0</span> </p>
-            <input id="blueSlider" type="range" min="0" max="255" value="1" oninput="setBrushWidth()" /> <br>
+            <input id="blueSlider" class="input" type="range" min="0" max="255" value="0" oninput="setBrushWidth()" /> <br>
             <div id="colorPreview"></div>
         </div>
 

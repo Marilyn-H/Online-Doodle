@@ -19,6 +19,11 @@ function DisplayCurrentTool() {
       else {
         button.className = "";
       }
+      button = document.getElementById("colorButton");
+      if ( currentTool == "color" ) button.className = "active";
+      else {
+        button.className = "";
+      }
 
       button = document.getElementById("resizeButton");
       if ( currentTool == "resize" ) button.className = "active";
@@ -60,16 +65,20 @@ function DisplayCurrentTool() {
       }
 
       settings = document.getElementById("colorSettings");
-      if ( currentTool == "paint" || currentTool == "erase" || currentTool == "rectStroke" || currentTool == "rectFill" ) {
+      if ( currentTool == "paint" || currentTool == "rectStroke" || currentTool == "rectFill" || currentTool == "color" ) {
         settings.style.display="block";
       } else {
         settings.style.display="none";
       }
 
       document.getElementById("brushSizeValue").innerHTML = brushWidth;
+      document.getElementById("brushSize").value = brushWidth;
       document.getElementById("redValue").innerHTML = currentColorRed;
       document.getElementById("greenValue").innerHTML = currentColorGreen;
       document.getElementById("blueValue").innerHTML = currentColorBlue;
+      document.getElementById("redSlider").value = currentColorRed;
+      document.getElementById("greenSlider").value = currentColorGreen;
+      document.getElementById("blueSlider").value = currentColorBlue;
       document.getElementById("colorPreview").style.backgroundColor = "rgb("+currentColorRed+","+currentColorGreen+","+currentColorBlue+")";
 
       setTimeout("DisplayCurrentTool()",1);

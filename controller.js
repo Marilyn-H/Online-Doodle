@@ -1,23 +1,5 @@
 window.addEventListener("load", start, false );
 
-var currentColorRed = 0;
-var currentColorGreen = 0;
-var currentColorBlue = 0;
-
-var prevPaintX;
-var prevPaintY;
-var startMouseX;
-var startMouseY;
-var mouseX;
-var mouseY;
-var mouseDown = false;
-var currentTool = "paint";
-var brushWidth = 1;
-var img;
-
-var mainCanvas;
-
-
 function start() {
   document.getElementsByTagName("body")[0].addEventListener("mousemove",trackMouse,false);
 
@@ -26,6 +8,7 @@ function start() {
 
   document.getElementById("paintButton").addEventListener( "click", setBrushTool, false);
   document.getElementById("eraseButton").addEventListener( "click", setEraseTool, false);
+  document.getElementById("colorButton").addEventListener( "click", setColorTool, false);
   document.getElementById("resizeButton").addEventListener( "click", setResizeTool, false);
   document.getElementById("cropButton").addEventListener( "click", setCropTool, false);
   document.getElementById("rectangleButton").addEventListener( "click", setRectangleTool, false);
@@ -53,10 +36,12 @@ var trackMouse = function ( event ) {
 
 function setBrushTool() {
   currentTool = "paint";
-  console.log( currentTool);
 }
 function setEraseTool() {
   currentTool = "erase";
+}
+function setColorTool() {
+  currentTool = "color";
 }
 function setResizeTool() {
   currentTool = "resize";
@@ -125,7 +110,6 @@ function saveFile() {
 
 
 function beginTool() {
-  console.log(currentTool);
   mouseDown = true;
   startMouseX = mouseX;
   startMouseY = mouseY;
@@ -147,6 +131,9 @@ function beginTool() {
   }
   if ( currentTool == "crop") {
     DrawCropGUI();
+  }
+  if ( currentTool == "color") {
+    colorTool();
   }
 }
 function ResizeTool() {
@@ -170,7 +157,7 @@ function ResizeTool() {
     guiCanvas.style.height = newHeight + "px";
 
     ctx.drawImage(img,0,0,mainCanvas.width,mainCanvas.height);
-    setTimeout("ResizeTool()",1);
+    setTimeout("ResizeTool()",16);
   }
 }
 
@@ -188,7 +175,7 @@ function PaintTool() {
     ctx.stroke();
     prevPaintX = mouseX;
     prevPaintY = mouseY;
-    setTimeout("PaintTool()",1);
+    setTimeout("PaintTool()",16);
   }
 }
 
@@ -202,13 +189,27 @@ function DrawRectGUI() {
   }
 }
 function DrawCropGUI() {
-  canRect = guiCanvas.getBoundingClientRect();
+  var canRect = guiCanvas.getBoundingClientRect();
   var ctx = guiCanvas.getContext("2d");
   ctx.fillStyle = "black";
   ctx.fillRect( 0, 0, guiCanvas.width, guiCanvas.height )
   if (mouseDown) {
     ctx.clearRect( startMouseX-canRect.left,startMouseY-canRect.top,mouseX-startMouseX,mouseY-startMouseY);
-    setTimeout("DrawCropGUI()",1);
+    setTimeout("DrawCropGUI()",16);
+  }
+}
+
+function colorTool() {
+  var canRect = guiCanvas.getBoundingClientRect();
+  var ctx = mainCanvas.getContext("2d");
+  var pointX = mouseX - canRect.left;
+  var pointY = mouseY - canRect.top;
+  var img = ctx.getImageData( pointX, pointY, 1, 1);
+  if ( mouseDown ) {
+    currentColorRed = img.data[0];
+    currentColorGreen = img.data[1];
+    currentColorBlue = img.data[2];
+    setTimeout("colorTool()",16);
   }
 }
 
@@ -282,11 +283,6 @@ function setColor() { // Sets color to current values in sliders
   currentColorRed = document.getElementById("redSlider").value;
   currentColorGreen = document.getElementById("greenSlider").value;
   currentColorBlue = document.getElementById("blueSlider").value;
-  //currentColor = document.getElementById("RGB").value;
-  //console.log(currentColor);
-
-  //document.getElementById("color-tool").style.backgroundColor = getColor();
-  //updateColorTool();
 }
 
 function setBrushWidth() {
