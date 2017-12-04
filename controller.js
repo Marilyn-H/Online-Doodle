@@ -4,8 +4,8 @@ var currentColorRed = 0;
 var currentColorGreen = 0;
 var currentColorBlue = 0;
 
-var prevMouseX;
-var prebMouseY;
+var prevPaintX;
+var prevPaintY;
 var startMouseX;
 var startMouseY;
 var mouseX;
@@ -27,6 +27,7 @@ function start() {
   document.getElementById("paintButton").addEventListener( "click", setBrushTool, false);
   document.getElementById("eraseButton").addEventListener( "click", setEraseTool, false);
   document.getElementById("resizeButton").addEventListener( "click", setResizeTool, false);
+  document.getElementById("cropButton").addEventListener( "click", setCropTool, false);
   document.getElementById("rectangleButton").addEventListener( "click", setRectangleTool, false);
   document.getElementById("rectangleStrokeButton").addEventListener( "click", setRectangleStroke, false);
   document.getElementById("rectangleFillButton").addEventListener( "click", setRectangleFill, false);
@@ -45,9 +46,7 @@ function start() {
   newFile();
 }
 
-function trackMouse() {
-  prevMouseX = mouseX;
-  prevMouseY = mouseY;
+var trackMouse = function ( event ) {
   mouseX  = event.clientX;
   mouseY = event.clientY;
 }
@@ -61,6 +60,9 @@ function setEraseTool() {
 }
 function setResizeTool() {
   currentTool = "resize";
+}
+function setCropTool() {
+  currentTool = "crop";
 }
 function setRectangleTool() {
   if ( currentTool != "rectStroke" || currentTool != "rectFill" )
@@ -76,10 +78,19 @@ function setRectangleTool() {
 function newFile() {
   mainCanvas.setAttribute("height","500");
   mainCanvas.setAttribute("width","500");
+  mainCanvas.style.width = "500px";
+  mainCanvas.style.height = "500px";
   canRect = mainCanvas.getBoundingClientRect();
   ctx = mainCanvas.getContext('2d');
   ctx.fillStyle = "rgb(255,255,255)";
   ctx.fillRect( 0, 0,mainCanvas.width, mainCanvas.height);
+  guiCanvas.setAttribute("height","500");
+  guiCanvas.setAttribute("width","500");
+  guiCanvas.style.width = "500px";
+  guiCanvas.style.height = "500px";
+  canRect = guiCanvas.getBoundingClientRect();
+  ctx2 = guiCanvas.getContext('2d');
+  ctx2.clearRect( 0, 0,guiCanvas.width, guiCanvas.height);
 }
 
 function openFile() {
@@ -93,10 +104,18 @@ function openFile() {
           mainCanvas.style.width = img.width + "px";
           mainCanvas.style.height = img.height + "px";
           ctx.drawImage(img,0,0);
+          guiCanvas.setAttribute("height",img.height);
+          guiCanvas.setAttribute("width",img.width);
+          guiCanvas.style.width = img.width + "px";
+          guiCanvas.style.height = img.height+ "px";
+          canRect = guiCanvas.getBoundingClientRect();
+          ctx2 = guiCanvas.getContext('2d');
+          ctx2.clearRect( 0, 0,guiCanvas.width, guiCanvas.height);
       }
       img.src = event.target.result;
   }
   reader.readAsDataURL(event.target.files[0]);
+
 }
 
 function saveFile() {
@@ -110,7 +129,12 @@ function beginTool() {
   mouseDown = true;
   startMouseX = mouseX;
   startMouseY = mouseY;
-  if ( currentTool == "paint" || currentTool == "erase" ) PaintTool();
+  if ( currentTool == "paint" || currentTool == "erase" ) {
+    var canRect = mainCanvas.getBoundingClientRect();
+    prevPaintX = mouseX;
+    prevPaintY = mouseY;
+    PaintTool();
+  }
   if ( currentTool == "resize") {
     img = new Image();
     var dataURL = mainCanvas.toDataURL();
@@ -120,6 +144,9 @@ function beginTool() {
   }
   if ( currentTool == "rectStroke" || currentTool == "rectFill" ) {
     DrawRectGUI();
+  }
+  if ( currentTool == "crop") {
+    DrawCropGUI();
   }
 }
 function ResizeTool() {
@@ -142,8 +169,26 @@ function ResizeTool() {
     guiCanvas.style.width = newWidth + "px";
     guiCanvas.style.height = newHeight + "px";
 
-    ctx.drawImage(img,0,0);
+    ctx.drawImage(img,0,0,mainCanvas.width,mainCanvas.height);
     setTimeout("ResizeTool()",1);
+  }
+}
+
+function PaintTool() {
+  if (mouseDown) {
+    var can = mainCanvas;
+    var canRect = can.getBoundingClientRect();
+    var ctx = can.getContext("2d");
+    ctx.beginPath();
+    ctx.moveTo(prevPaintX-canRect.left,prevPaintY-canRect.top);
+    ctx.lineTo(mouseX-canRect.left,mouseY-canRect.top);
+    ctx.strokeStyle=getColor();
+    ctx.lineJoin = ctx.lineCap = 'round';
+    ctx.lineWidth = brushWidth;
+    ctx.stroke();
+    prevPaintX = mouseX;
+    prevPaintY = mouseY;
+    setTimeout("PaintTool()",1);
   }
 }
 
@@ -156,24 +201,55 @@ function DrawRectGUI() {
   setTimeout("DrawRectGUI()",1);
   }
 }
-
-function PaintTool() {
+function DrawCropGUI() {
+  canRect = guiCanvas.getBoundingClientRect();
+  var ctx = guiCanvas.getContext("2d");
+  ctx.fillStyle = "black";
+  ctx.fillRect( 0, 0, guiCanvas.width, guiCanvas.height )
   if (mouseDown) {
-    var can = mainCanvas;
-    var canRect = can.getBoundingClientRect();
-    var ctx = can.getContext("2d");
-    ctx.beginPath();
-    ctx.moveTo(prevMouseX-canRect.left,prevMouseY-canRect.top);
-    ctx.lineTo(mouseX-canRect.left,mouseY-canRect.top);
-    ctx.strokeStyle=getColor();
-    ctx.lineJoin = ctx.lineCap = 'round';
-    ctx.lineWidth = brushWidth;
-    ctx.stroke();
-    setTimeout("PaintTool()",10);
+    ctx.clearRect( startMouseX-canRect.left,startMouseY-canRect.top,mouseX-startMouseX,mouseY-startMouseY);
+    setTimeout("DrawCropGUI()",1);
   }
 }
 
 function endTool() {
+  var canRect2 = guiCanvas.getBoundingClientRect();
+  var ctx2 = guiCanvas.getContext("2d");
+  var newWidth =  mainCanvas.width;
+  var newHeight = mainCanvas.height;
+  guiCanvas.setAttribute( "width", newWidth );
+  guiCanvas.setAttribute( "height", newHeight );
+  guiCanvas.style.width = newWidth + "px";
+  guiCanvas.style.height = newHeight + "px";
+  if ( mouseDown && currentTool == "crop" ) {
+    img = new Image();
+    var dataURL = mainCanvas.toDataURL();
+    img.src = dataURL;
+    img.onload = function() {
+      var canRect = mainCanvas.getBoundingClientRect();
+      var ctx = mainCanvas.getContext("2d");
+      var newWidth =  Math.abs(mouseX - startMouseX)
+      var newHeight = Math.abs(mouseY - startMouseY);
+      mainCanvas.setAttribute( "width", newWidth );
+      mainCanvas.setAttribute( "height", newHeight );
+      mainCanvas.style.width = newWidth + "px";
+      mainCanvas.style.height = newHeight + "px";
+
+      var canRect2 = guiCanvas.getBoundingClientRect();
+      var ctx2 = guiCanvas.getContext("2d");
+      var newWidth =  mainCanvas.width;
+      var newHeight = mainCanvas.height;
+      guiCanvas.setAttribute( "width", newWidth );
+      guiCanvas.setAttribute( "height", newHeight );
+      guiCanvas.style.width = newWidth + "px";
+      guiCanvas.style.height = newHeight + "px";
+      ctx2.clearRect( 0, 0, guiCanvas.width, guiCanvas.height );
+
+      var cropOffsetX = Math.max( canRect.left-startMouseX, canRect.left-mouseX );
+      var cropOffsetY = Math.max( canRect.top-startMouseY, canRect.top-mouseY );
+      ctx.drawImage(img,cropOffsetX, cropOffsetY);
+    }
+  }
   if ( mouseDown && (currentTool == "rectStroke" || currentTool == "rectFill" ) ) {  
     var canRect = mainCanvas.getBoundingClientRect();
     var ctx = mainCanvas.getContext("2d");

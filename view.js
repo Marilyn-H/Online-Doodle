@@ -6,7 +6,7 @@ function startView() {
 
 function DisplayCurrentTool() {
 
-      var button;
+  var button;
       
       button = document.getElementById("paintButton");
       if ( currentTool == "paint" ) button.className = "active";
@@ -25,6 +25,12 @@ function DisplayCurrentTool() {
       else {
         button.className = "";
       }
+      button = document.getElementById("cropButton");
+      if ( currentTool == "crop" ) button.className = "active";
+      else {
+        button.className = "";
+      }
+      
 
       button = document.getElementById("rectangleButton");
       if ( currentTool == "rectStroke" || currentTool == "rectFill" ) {
