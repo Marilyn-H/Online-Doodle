@@ -2,6 +2,7 @@
 
 <html>
   <head>
+    <title>Online||Doodle</title>
       <meta charset="utf-8">
       <script type="text/javascript" src="model.js" ></script>
       <script type="text/javascript" src="view.js" ></script>
@@ -28,6 +29,7 @@
 
         <button id="paintButton" >PAINT</button> <br>
         <button id="eraseButton" >ERASE</button> <br>
+        <button id="lineButton" >LINE</button> <br>
         <button id="colorButton" >COLOR PICK</button> <br>
         <button id="resizeButton" >RESIZE</button> <br>
         <button id="cropButton" >CROP</button> <br>
@@ -42,15 +44,15 @@
           <button id="rectangleFillButton" class="halfButton">FILL</button>
         </div>
         <div id="widthSettings">
-          <p>Width: <span id="brushSizeValue">1</span> </p>
+          <p>Width: </p>
           <input class="input" id="brushSize" type="text" value="1" oninput="setBrushWidth()" /> <br>
         </div>
         <div id="colorSettings">
-            <p>Red: <span id="redValue">0</span> </p>
+            <p>Red: <span class="right" id="redValue">0</span> </p>
             <input id="redSlider" class="input" type="range" min="0" max="255" value="0" oninput="setBrushWidth()" /> <br>
-            <p>Green: <span id="greenValue">0</span> </p>
+            <p>Green: <span class="right" id="greenValue">0</span> </p>
             <input id="greenSlider" class="input" type="range" min="0" max="255" value="0" oninput="setBrushWidth()" /> <br>
-            <p>Blue: <span id="blueValue">0</span> </p>
+            <p>Blue: <span id="blueValue" class="right">0</span> </p>
             <input id="blueSlider" class="input" type="range" min="0" max="255" value="0" oninput="setBrushWidth()" /> <br>
             <div id="colorPreview"></div>
         </div>

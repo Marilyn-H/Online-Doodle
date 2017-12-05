@@ -50,7 +50,6 @@ html, body {
   background-color: lightblue;
   height:100%;
   float: left;
-
   text-align: center;
   width: 170px;
 }
@@ -70,12 +69,18 @@ html, body {
       background-color: white;
     }
   #toolBar p {
+    text-align: left;
     font-size: 12px;
+    padding: 0 10px;
     margin:0 0;
   }
   #toolBar .input {
+    text-align: right;
     margin: 0;
-    width: 90%;
+    width: 80%;
+  }
+  #toolBar .right {
+    float: right;
   }
   #toolBar .halfButton {
     padding: 0;
