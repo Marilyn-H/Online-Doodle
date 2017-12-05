@@ -38,4 +38,16 @@ Simple web-page application that allows you to upload and edit an image to a can
 
 **Color:** Specifiy the color of the strokes used on the drawing.
 
+## Credits:
 
+Created by
+
+...Rosa Aquino
+
+...Ernest Gaddi
+
+...Marilyn Henein
+
+...Sargis Hovhannisyan
+
+...Raul Pool
