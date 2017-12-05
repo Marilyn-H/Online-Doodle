@@ -12,6 +12,9 @@ function start() {
   document.getElementById("resizeButton").addEventListener( "click", setResizeTool, false);
   document.getElementById("cropButton").addEventListener( "click", setCropTool, false);
   document.getElementById("rectangleButton").addEventListener( "click", setRectangleTool, false);
+  document.getElementById("ellipseButton").addEventListener( "click", setEllipseTool, false);
+  document.getElementById("ellipseStrokeButton").addEventListener( "click", setEllipseStroke, false);
+  document.getElementById("ellipseFillButton").addEventListener( "click", setEllipseFill, false);
   document.getElementById("rectangleStrokeButton").addEventListener( "click", setRectangleStroke, false);
   document.getElementById("rectangleFillButton").addEventListener( "click", setRectangleFill, false);
   document.getElementById("redSlider").addEventListener( "input", setColor, false);
@@ -49,8 +52,18 @@ function setResizeTool() {
 function setCropTool() {
   currentTool = "crop";
 }
+function setEllipseTool() {
+  if ( currentTool != "ellipseStroke" && currentTool != "ellipseFill" )
+  currentTool = "ellipseStroke";
+}
+  function setEllipseStroke() {
+    currentTool = "ellipseStroke";
+  }
+  function setEllipseFill() {
+    currentTool = "ellipseFill";
+  }
 function setRectangleTool() {
-  if ( currentTool != "rectStroke" || currentTool != "rectFill" )
+  if ( currentTool != "rectStroke" && currentTool != "rectFill" )
   currentTool = "rectStroke";
 }
   function setRectangleStroke() {
@@ -110,6 +123,7 @@ function saveFile() {
 
 
 function beginTool() {
+  console.log( currentTool);
   mouseDown = true;
   startMouseX = mouseX;
   startMouseY = mouseY;
@@ -128,6 +142,9 @@ function beginTool() {
   }
   if ( currentTool == "rectStroke" || currentTool == "rectFill" ) {
     DrawRectGUI();
+  }
+  if ( currentTool == "ellipseStroke" || currentTool == "ellipseFill" ) {
+    DrawEllipseGUI();
   }
   if ( currentTool == "crop") {
     DrawCropGUI();
@@ -184,10 +201,25 @@ function DrawRectGUI() {
   var ctx = guiCanvas.getContext("2d");
   ctx.clearRect(0, 0, guiCanvas.width, guiCanvas.height);
   if (mouseDown) {
-  ctx.strokeRect( startMouseX-canRect.left,startMouseY-canRect.top,mouseX-startMouseX,mouseY-startMouseY);
-  setTimeout("DrawRectGUI()",1);
+    ctx.strokeRect( startMouseX-canRect.left,startMouseY-canRect.top,mouseX-startMouseX,mouseY-startMouseY);
+    setTimeout("DrawRectGUI()",16);
   }
 }
+
+function DrawEllipseGUI() {
+  canRect = guiCanvas.getBoundingClientRect();
+  var ctx = guiCanvas.getContext("2d");
+  ctx.clearRect(0, 0, guiCanvas.width, guiCanvas.height);
+  if (mouseDown) {
+    ctx.beginPath();
+    ctx.strokeStyle='black"';
+    ctx.lineWidth = 1;
+    ctx.ellipse( (startMouseX+mouseX)/2 - canRect.left,(startMouseY+mouseY)/2 - canRect.top,Math.abs(mouseX-startMouseX)/2,Math.abs(mouseY-startMouseY)/2,0,0,Math.PI*2,false);
+    ctx.stroke();
+    setTimeout("DrawEllipseGUI()",16);
+  }
+}
+
 function DrawCropGUI() {
   var canRect = guiCanvas.getBoundingClientRect();
   var ctx = guiCanvas.getContext("2d");
@@ -264,6 +296,23 @@ function endTool() {
     else if ( currentTool == "rectFill" ) {
       ctx.fillStyle = getColor();
       ctx.fillRect( startMouseX-canRect.left, startMouseY-canRect.top,mouseX-startMouseX,mouseY-startMouseY);
+    }
+  }
+  if ( mouseDown && (currentTool == "ellipseStroke" || currentTool == "ellipseFill" ) ) {
+    var canRect = mainCanvas.getBoundingClientRect();
+    var ctx = mainCanvas.getContext("2d");
+    ctx.beginPath();
+    ctx.strokeStyle=getColor();
+    ctx.fillStyle=getColor();
+    ctx.lineWidth = brushWidth;
+    ctx.ellipse( (startMouseX+mouseX)/2 - canRect.left,(startMouseY+mouseY)/2 - canRect.top,Math.abs(mouseX-startMouseX)/2,Math.abs(mouseY-startMouseY)/2,0,0,Math.PI*2,false);
+    if ( currentTool == "ellipseStroke" )
+    {
+      ctx.stroke();
+    }
+    else if (currentTool == "ellipseFill" ) {
+      console.log("huh");
+      ctx.fill();
     }
   }
   mouseDown = false;

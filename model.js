@@ -9,7 +9,7 @@ var startMouseY;
 var mouseX;
 var mouseY;
 var mouseDown = false;
-var currentTool = "paint";
+var currentTool = "ellipseStroke";
 var brushWidth = 1;
 var img;
 

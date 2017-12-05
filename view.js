@@ -57,15 +57,35 @@ function DisplayCurrentTool() {
         button.className = "halfButton";
       }
 
+      button = document.getElementById("ellipseButton");
+      if ( currentTool == "ellipseStroke" || currentTool == "ellipseFill" ) {
+        button.className = "active";
+        document.getElementById("ellipseSettings").style.display = "block";
+      }
+      else {
+        button.className = "";
+        document.getElementById("ellipseSettings").style.display = "none";
+      }
+      button = document.getElementById("ellipseStrokeButton");
+      if ( currentTool == "ellipseStroke" ) button.className = "halfButton active";
+      else {
+        button.className = "halfButton";
+      }
+      button = document.getElementById("ellipseFillButton");
+      if ( currentTool == "ellipseFill" ) button.className = "halfButton active";
+      else {
+        button.className = "halfButton";
+      }
+
       settings = document.getElementById("widthSettings");
-      if ( currentTool == "paint" || currentTool == "erase" || currentTool == "rectStroke" ) {
+      if ( currentTool == "paint" || currentTool == "erase" || currentTool == "rectStroke" || currentTool == "ellipseStroke" ) {
         settings.style.display="block";
       } else {
         settings.style.display="none";
       }
 
       settings = document.getElementById("colorSettings");
-      if ( currentTool == "paint" || currentTool == "rectStroke" || currentTool == "rectFill" || currentTool == "color" ) {
+      if ( currentTool == "paint" || currentTool == "ellipseStroke" || currentTool == "ellipseFill" || currentTool == "rectStroke" || currentTool == "rectFill" || currentTool == "color" ) {
         settings.style.display="block";
       } else {
         settings.style.display="none";
