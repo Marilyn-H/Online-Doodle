@@ -1,0 +1,128 @@
+html, body {
+  font-family: sans-serif;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+#header {
+  background-color: black;
+  width: 100%;
+  padding: 10px 10px 5px;
+}
+#logo {
+  height: 38px;
+  image-rendering: pixelated;
+}
+
+
+#fileBar {
+  background-color: lightblue;
+  margin: 0;
+  padding: 0;
+  
+}
+  #fileBar button, #fileBar label {
+    display: inline-block;
+    text-align: center;
+    color: black;
+    font-size: 12px;
+    background-color: lightblue;
+    border: none;
+    margin: 0;
+    padding: 0 5px;
+    width: 50px !important;
+    height: 100%;
+  }
+  #fileBar button:hover, #fileBar label:hover {
+    color: white;
+  }
+  #openInput {
+    display:none;
+  }
+
+#mainArea{
+  height:100%;
+  width: 100%;
+}
+
+#toolBar{
+  background-color: lightblue;
+  height:100%;
+  float: left;
+  text-align: center;
+  width: 170px;
+}
+  #toolBar button {
+    border: 0 solid white;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    background-color: lightblue;
+    width: 100%;
+  }
+    #toolBar button:hover:not(.active) {
+      border-left: 5px solid white;
+      transition: border .5s;
+    }
+    #toolBar .active {
+      background-color: white;
+    }
+  #toolBar p {
+    text-align: left;
+    font-size: 12px;
+    padding: 0 10px;
+    margin:0 0;
+  }
+  #toolBar .input {
+    text-align: right;
+    margin: 0;
+    width: 80%;
+  }
+  #toolBar .right {
+    float: right;
+  }
+  #toolBar .halfButton {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    font-size: 12px;
+    width: 48%;
+  }
+  #toolBar div:not(#colorPreview) {
+    border-top: 1px solid white;
+    padding: 5px 0;
+    margin: 5px 0 0 0;
+  }
+  #toolBar #colorPreview {
+    border: 1px solid black;
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+    transition: background-color .5s;
+  }
+
+#drawingArea {
+  height: 100%;
+  background-color: lightgray;
+}
+#mainCanvas {
+  position: absolute;
+  height: 500px;
+  width: 500px;
+  /*top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);*/
+  background-color: white;
+  border: 1px solid black;
+}
+
+#guiCanvas {
+  pointer-events:none;
+  position: absolute;
+  background-color: rgba(255,255,255,0);
+  height: 500px;
+  width: 500px;
+  opacity: .25;
+  z-index: 100;
+}

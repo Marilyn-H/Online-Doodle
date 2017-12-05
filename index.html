@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<!--
+
+==================== Online||Doodle ====================
+
+Rosa Aquino
+Ernest Gaddi
+Marilyn Henein
+Sargis Hovhannisyan
+Raul Pool
+
+Computer Science 467 Multimedia Project
+Final Project: Web-base Image Authoring Tool
+Fall 2017
+Professor Virginia Mushkablat
+
+-->
+
+<html>
+  <head>
+    <title>Online||Doodle</title>
+      <meta charset="utf-8">
+      <script type="text/javascript" src="model.js" ></script>
+      <script type="text/javascript" src="view.js" ></script>
+      <script type="text/javascript" src="controller.js" ></script>
+      <link rel="stylesheet" type="text/css" href="main.css">      
+
+
+  </head>
+
+  <body>
+    <div id="header">
+      <img id="logo" src="logo.png" />
+    </div>
+    <div id="fileBar">
+      <button id="newButton">New</button>
+      <label for="openInput">Open</label>
+      <input id="openInput" type='file' accept='image/*' onchange='openFile()'>
+      <button id="saveButton">Save</button>
+    </div>
+
+    <div id="mainArea" >
+
+      <div id="toolBar">
+
+        <button id="paintButton" >PAINT</button> <br>
+        <button id="eraseButton" >ERASE</button> <br>
+        <button id="lineButton" >LINE</button> <br>
+        <button id="colorButton" >COLOR PICK</button> <br>
+        <button id="resizeButton" >RESIZE</button> <br>
+        <button id="cropButton" >CROP</button> <br>
+        <button id="ellipseButton" >ELLIPSE</button> <br>
+        <button id="rectangleButton" >RECTANGLE</button> <br>
+        <div id="ellipseSettings">
+          <button id="ellipseStrokeButton" class="halfButton">STROKE</button>
+          <button id="ellipseFillButton" class="halfButton">FILL</button>
+        </div>
+        <div id="rectangleSettings">
+          <button id="rectangleStrokeButton" class="halfButton">STROKE</button>
+          <button id="rectangleFillButton" class="halfButton">FILL</button>
+        </div>
+        <div id="widthSettings">
+          <p>Width: </p>
+          <input class="input" id="brushSize" type="text" value="1" oninput="setBrushWidth()" /> <br>
+        </div>
+        <div id="colorSettings">
+            <p>Red: <span class="right" id="redValue">0</span> </p>
+            <input id="redSlider" class="input" type="range" min="0" max="255" value="0" oninput="setBrushWidth()" /> <br>
+            <p>Green: <span class="right" id="greenValue">0</span> </p>
+            <input id="greenSlider" class="input" type="range" min="0" max="255" value="0" oninput="setBrushWidth()" /> <br>
+            <p>Blue: <span id="blueValue" class="right">0</span> </p>
+            <input id="blueSlider" class="input" type="range" min="0" max="255" value="0" oninput="setBrushWidth()" /> <br>
+            <div id="colorPreview"></div>
+        </div>
+
+      </div>
+
+      <div id="drawingArea">
+        <canvas id="mainCanvas" height=500 width=500></canvas>
+        <canvas id="guiCanvas" height=500 width=500></canvas>
+      </div>
+
+  </div>
+
+  </body>
+
+
+</html>
